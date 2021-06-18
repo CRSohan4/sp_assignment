@@ -1,0 +1,35 @@
+#!/bin/bash
+counter=1
+echo "[INFO] Processing file..."
+
+# remove footnotes (FN:)
+pattern="FN:"
+sed "/$pattern/d" demo.txt > demo1.txt
+mv demo1.txt demo.txt
+
+while IFS= read -r line;
+do
+	# Capitalize first word of the sentence.
+	if [[ $line != "" ]]; then
+		sed "$counter s/$line/${line^}/" demo.txt > demo1.txt
+		mv demo1.txt demo.txt
+	fi
+	counter=`expr $counter + 1`
+done < demo.txt
+
+# make questions
+counters=1
+while IFS= read -r line;
+do
+	echo $line
+	echo -----
+	if [ "$line" == "What*" ] || [ "$line" == "When*" ] || [ "$line" == "Where*" ] || [ "$line" == "Can*" ] || [ "$line" == "Will*" ] || [ "$line" == "Who*" ]; then
+		dot_str="."
+		question_str="?"
+		echo $line
+		sed "$counters s/$dot_str/${question_str}/" demo.txt > demo1.txt
+		mv demo1.txt demo.txt
+	fi
+	counters=`expr $counters + 1`
+done < demo.txt
+echo "[SUCCESS] File Processes Successfully"

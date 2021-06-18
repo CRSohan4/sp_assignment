@@ -1,0 +1,12 @@
+#!/bin/bash
+counter=0
+while IFS= read -r line;
+do 
+	echo "Text read from file: $line $counter" 
+
+	if [[ $line == *"FN:"* ]]; then
+		sed "$counter s/$line//" demo.txt > demo1.txt
+		mv demo1.txt demo.txt
+	fi
+	counter=`expr $counter + 1`
+done < demo.txt
