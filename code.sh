@@ -25,8 +25,7 @@ done < $var
 counters=1
 while IFS= read -r line;
 do
-	echo $line
-	if [ "$line" == "Wh"* ] || [ "$line" == "Can"* ] || [ "$line" == "Could"* ] || [ "$line" == "Will"* ] || [ "$line" == "Would"* ] || [ "$line" == "How"* ]; then
+	if [[ "$line" == "Wh"* || "$line" == "Can"* || "$line" == "Could"* || "$line" == "Will"* || "$line" == "Would"* || "$line" == "How"* ]]; then
 		echo "enter"		
 		dot_str="."
 		question_str="?"
